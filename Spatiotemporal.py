@@ -109,7 +109,6 @@ def test(net_S, net_T):
 
 def main(mode, net_name, pretrained):
     # Net Assign
-    #/home/nsbb/.local/lib/python3.6/site-packages/torchvision/models/main
     pth = '../pth/Spatiotemporal_'+net_name+'.pth'
     net_S = eval(net_name+'(num_classes=num_classes).cuda()')
     net_T = eval(net_name+'(num_classes=num_classes).cuda()')
