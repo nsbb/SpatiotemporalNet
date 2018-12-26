@@ -104,12 +104,10 @@ def test(net_S, net_T):
         print('Predicted   : ', ''.join('%s '%classes[predicted_T[j]] for j in range(minibatch_test)))
         print('GroundTruth : ', ''.join('%s '%classes[target_T[j]] for j in range(minibatch_test)))
         imshow(torchvision.utils.make_grid(img_T.cpu(), nrow=5))
-        #dump_tensors()
     print('Test Finished')
 
 def main(mode, net_name, pretrained):
-    #Net Assign
-    #/home/nsbb/.local/lib/python3.6/site-packages/torchvision/models/main
+    # Net Assign
     pth = '../pth/Spatiotemporal_'+net_name+'.pth'
     net_S = eval(net_name+'(num_classes=num_classes).cuda()')
     net_T = eval(net_name+'(num_classes=num_classes).cuda()')
