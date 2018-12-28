@@ -13,7 +13,6 @@ epoch_num = 100
 minibatch_train = 100
 minibatch_test = 10
 learning_rate = 0.01
-drop_out = 0.5 #0.5 or 0.9
 num_classes = 51
 save_net = 10
 classes = ('brushed_hair', 'cartwheel', 'catch', 'chew', 'clap', 'climb', 'clib_stairs', 'dive', 'draw_sword', 'dribble',
@@ -86,24 +85,25 @@ def test(net_S, net_T):
         img_S, target_S = img_S.cuda(), target_S.cuda()
         img_T, target_T = img_T.cuda(), target_T.cuda()
 
-        output_S, output_T = net_S(img_S), net_T(img_T)
-        _, predicted_S = torch.max(output_S, 1)
-        _, predicted_T = torch.max(output_T, 1)
+        with torch.no_grad():
+            output_S, output_T = net_S(img_S), net_T(img_T)
+            _, predicted_S = torch.max(output_S, 1)
+            _, predicted_T = torch.max(output_T, 1)
 
-        result_S = [int(torch.argmax(output_S,1)[j])==int(target_S[j]) for j in range(len(target_S))]
-        result_T = [int(torch.argmax(output_T,1)[j])==int(target_T[j]) for j in range(len(target_T))]
-        accuracy_S = round((sum(result_S)/len(result_S))*100) 
-        accuracy_T = round((sum(result_T)/len(result_T))*100)
+            result_S = [int(torch.argmax(output_S,1)[j])==int(target_S[j]) for j in range(len(target_S))]
+            result_T = [int(torch.argmax(output_T,1)[j])==int(target_T[j]) for j in range(len(target_T))]
+            accuracy_S = round((sum(result_S)/len(result_S))*100) 
+            accuracy_T = round((sum(result_T)/len(result_T))*100)
 
-        print('Spatial : {:03}, accuracy:{:03}%'.format(i, accuracy_S), flush=True)
-        print('Predicted   : ', ''.join('%s '%classes[predicted_S[j]] for j in range(minibatch_test)))
-        print('GroundTruth : ', ''.join('%s '%classes[target_S[j]] for j in range(minibatch_test)))
-        imshow(torchvision.utils.make_grid(img_S.cpu(), nrow=5))
+            print('Spatial : {:03}, accuracy:{:03}%'.format(i, accuracy_S), flush=True)
+            print('Predicted   : ', ''.join('%s '%classes[predicted_S[j]] for j in range(minibatch_test)))
+            print('GroundTruth : ', ''.join('%s '%classes[target_S[j]] for j in range(minibatch_test)))
+            imshow(torchvision.utils.make_grid(img_S.cpu(), nrow=5))
  
-        print('Temporal: {:03}, accuracy:{:03}%'.format(i, accuracy_T), flush=True)
-        print('Predicted   : ', ''.join('%s '%classes[predicted_T[j]] for j in range(minibatch_test)))
-        print('GroundTruth : ', ''.join('%s '%classes[target_T[j]] for j in range(minibatch_test)))
-        imshow(torchvision.utils.make_grid(img_T.cpu(), nrow=5))
+            print('Temporal: {:03}, accuracy:{:03}%'.format(i, accuracy_T), flush=True)
+            print('Predicted   : ', ''.join('%s '%classes[predicted_T[j]] for j in range(minibatch_test)))
+            print('GroundTruth : ', ''.join('%s '%classes[target_T[j]] for j in range(minibatch_test)))
+            imshow(torchvision.utils.make_grid(img_T.cpu(), nrow=5))
     print('Test Finished')
 
 def main(mode, net_name, pretrained):
