@@ -1,6 +1,6 @@
 # SpatiotemporalNet  
 2018.12.18  
-Kim HuiSoo  
+Huisoo Kim  
 # Introduction
 SpatiolNet + TemporalNet = SpatiotemporalNet  
 DataSet : HMDB51  
