@@ -2,7 +2,7 @@
 2018.12.18  
 Huisoo Kim  
 # Introduction
-SpatiolNet + TemporalNet = SpatiotemporalNet  
+SpatialNet + TemporalNet = SpatiotemporalNet  
 DataSet : HMDB51  
 Framework : Pytorch  
 Net : ResNet18  
